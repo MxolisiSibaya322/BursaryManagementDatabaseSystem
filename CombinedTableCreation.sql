@@ -43,6 +43,7 @@ GO
 CREATE TABLE [dbo].[Universities] (
     [UniversityID] INT PRIMARY KEY IDENTITY(1,1),
     [UniName] VARCHAR(200),
+    [Dept] VARCHAR(20),
     UserID int REFERENCES Users (UserID)
 );
 GO
@@ -87,6 +88,7 @@ CREATE TABLE [dbo].StudentsTable(
     Gender varchar(6) NOT NULL,
     DateOfBirth date NOT NULL,
     Ethnicity varchar(10) NOT NULL,
+    [Dept] VARCHAR(20) NOT NULL,
     CONSTRAINT [CK_DateOfBirth] CHECK ((dbo.CalculateAge(DateOfBirth) > 18)),
     CONSTRAINT [CKK_DateOfBirth] check( (dbo.CalculateAge(DateOfBirth) <36 )),
     CONSTRAINT [CK_Ethnicity] CHECK(Ethnicity IN( 'African','Colored','Indian'))
@@ -100,7 +102,6 @@ CREATE TABLE [dbo].[StudentAllocations](
     StudentID int REFERENCES StudentsTable(StudentID)
 );
 GO
-
 -- Create a trigger to update AmountSpent when a new application is created
 
 CREATE TRIGGER UpdateAmountSpent
