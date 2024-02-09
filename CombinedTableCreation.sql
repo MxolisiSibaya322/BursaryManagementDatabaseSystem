@@ -102,7 +102,10 @@ CREATE TABLE [dbo].[StudentAllocations](
     StudentID int REFERENCES StudentsTable(StudentID)
 );
 GO
+
+/*
 -- Create a trigger to update AmountSpent when a new application is created
+-- Need to check trigger and fix 
 
 CREATE TRIGGER UpdateAmountSpent
 ON StudentAllocations
@@ -120,6 +123,7 @@ BEGIN
 END;
 
 GO 
+*/
 
 -- Creating Student Documents Table
 CREATE TABLE [dbo].Documents (
