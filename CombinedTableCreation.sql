@@ -42,7 +42,7 @@ GO
 -- Creating Universities Table 
 CREATE TABLE [dbo].[Universities] (
     [UniversityID] INT PRIMARY KEY IDENTITY(1,1),
-    [Name] VARCHAR(200),
+    [UniName] VARCHAR(200),
     UserID int REFERENCES Users (UserID)
 );
 GO
