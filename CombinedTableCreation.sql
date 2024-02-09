@@ -49,15 +49,15 @@ CREATE TABLE [dbo].[Universities] (
 GO
 
 -- Creating University Application Table
-CREATE TABLE [dbo].[UniversityApplication] (
+ CREATE TABLE [dbo].[UniversityApplication] (
     [ApplicationID] INT PRIMARY KEY IDENTITY(1,1),
-    [State] VARCHAR(200),
+    [ApplicationStatus] VARCHAR(200),
     UniversityID int REFERENCES Universities(UniversityID) -- Specify the data type here
 );
 GO
 
 
--- Creating Bursary Allocations Table 
+-- Creating Bursary Allocations Table
 CREATE TABLE BursaryAllocations (
     AllocationID INT PRIMARY KEY IDENTITY,
     UniversityID INT,
