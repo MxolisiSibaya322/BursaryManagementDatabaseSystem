@@ -93,7 +93,6 @@ CREATE TABLE [dbo].StudentsTable(
 );
 GO
 
-
 -- Creating Student Allocations Table
 CREATE TABLE [dbo].[StudentAllocations](
     AllocationID int PRIMARY KEY  identity(1,1),
@@ -101,6 +100,26 @@ CREATE TABLE [dbo].[StudentAllocations](
     StudentID int REFERENCES StudentsTable(StudentID)
 );
 GO
+
+-- Create a trigger to update AmountSpent when a new application is created
+
+CREATE TRIGGER UpdateAmountSpent
+ON StudentAllocations
+AFTER INSERT
+AS
+BEGIN
+    -- Update AmountSpent in BursaryAllocations table
+    -- Still need to test out 
+    UPDATE BursaryAllocations
+    SET AmountSpent = AmountSpent + inserted.Amount
+    FROM BursaryAllocations BA
+    INNER JOIN Students S ON BA.UniversityID = S.UniversityID
+    INNER JOIN inserted ON BA.AllocationID = inserted.AllocationID
+    WHERE S.StudentID = inserted.StudentID;
+END;
+
+GO 
+
 -- Creating Student Documents Table
 CREATE TABLE [dbo].Documents (
     CV VARBINARY(1000),
