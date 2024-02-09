@@ -7,6 +7,20 @@ GO
 USE BursaryDatabase
 GO
 
+CREATE FUNCTION dbo.CalculateAge
+(
+    @DateOfBirth date
+)
+RETURNS INT
+AS
+BEGIN
+    DECLARE @Result INT;
+
+    SET @Result = DATEDIFF(day,@DateOfBirth,CAST (GETDATE() AS DATE ))
+
+    RETURN @Result/365;
+END;
+GO
 -- Creating Roles Table 
 CREATE TABLE [dbo].Roles (
 RoleID int PRIMARY KEY IDENTITY(1,1) ,
@@ -73,11 +87,12 @@ CREATE TABLE [dbo].StudentsTable(
     Gender varchar(6) NOT NULL,
     DateOfBirth date NOT NULL,
     Ethnicity varchar(10) NOT NULL,
-    CONSTRAINT [CK_DateOfBirth] check( (DATEDIFF(year,DateOfBirth,CAST (GETDATE() AS DATE )) >18)),
-    CONSTRAINT [CKK_DateOfBirth] check( (DATEDIFF(year,DateOfBirth,CAST (GETDATE() AS DATE )) <36 )),
+    CONSTRAINT [CK_DateOfBirth] CHECK ((dbo.CalculateAge(DateOfBirth) > 18)),
+    CONSTRAINT [CKK_DateOfBirth] check( (dbo.CalculateAge(DateOfBirth) <36 )),
     CONSTRAINT [CK_Ethnicity] CHECK(Ethnicity IN( 'African','Colored','Indian'))
 );
 GO
+
 
 -- Creating Student Allocations Table
 CREATE TABLE [dbo].[StudentAllocations](
@@ -95,3 +110,10 @@ CREATE TABLE [dbo].Documents (
 );
 GO
 
+-- SELECT * FROM dbo.Users
+-- SELECT * FROM dbo.Roles
+-- SELECT * FROM dbo.StudentsTable
+-- SELECT * FROM dbo.Universities
+-- SELECT * FROM dbo.UniversityApplication
+-- SELECT * FROM dbo.UniversityApplication
+-- SELECT * FROM dbo.BBDAdminBalance
