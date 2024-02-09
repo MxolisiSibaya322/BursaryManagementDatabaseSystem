@@ -3,5 +3,5 @@ CREATE PROCEDURE InsertIntoUniversityTable
 @AmountAllocated money ,
 @AmountRemaining money ,
 AmountSpent money
-AS INSERT INTO 
+AS INSERT INTO BursaryAllocations
  VALUES (@UniversityID,@AmountAllocated,@AmountRemaining,@AmountSpent)
