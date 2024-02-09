@@ -31,7 +31,7 @@ GO
 -- Creating Users Table 
 CREATE TABLE [dbo].Users (
     UserID INT PRIMARY KEY IDENTITY(1,1),
-    Name VARCHAR(255) NOT NULL,
+    UserName VARCHAR(255) NOT NULL,
     Email VARCHAR(255) UNIQUE,
     RoleID INT NOT NULL,
     FOREIGN KEY (RoleID) REFERENCES Roles(RoleID)
