@@ -21,21 +21,53 @@ BEGIN
     RETURN @Result/365.25;
 END;
 GO
+
+/*Updated Roles Table*/
 -- Creating Roles Table 
 CREATE TABLE [dbo].Roles (
 RoleID int PRIMARY KEY IDENTITY(1,1) ,
-RoleName varchar(3),
+RoleName varchar(10),
 );
+GO
+INSERT INTO dbo.Roles(RoleName) VALUES ('BBDAdmin'),('University'),('Student')
 GO
 
 -- Creating Users Table 
 CREATE TABLE [dbo].Users (
     UserID INT PRIMARY KEY IDENTITY(1,1),
-    UserName VARCHAR(255) NOT NULL,
-    Email VARCHAR(255) UNIQUE,
+    FirstName VARCHAR(255) NOT NULL,
+    LastName VARCHAR(255) NOT NULL,
     RoleID INT NOT NULL,
     FOREIGN KEY (RoleID) REFERENCES Roles(RoleID)
 );
+GO
+INSERT INTO dbo.Users (FirstName, LastName, RoleID)
+VALUES ('Mike', 'Smith', 2);
+GO
+
+/*Added Ethnicity, Dept and Genders tables*/
+CREATE TABLE [dbo].Ethnicity(
+EthnicityID int PRIMARY KEY IDENTITY(1,1) ,
+Ethnicity VARCHAR(8)
+);
+GO
+INSERT INTO dbo.Ethnicity(Ethnicity) VALUES ('African'),('Indian'),('Colored')
+GO
+
+CREATE TABLE [dbo].Genders(
+GenderID int PRIMARY KEY IDENTITY(1,1) ,
+Gender VARCHAR(6)
+);
+GO
+INSERT INTO dbo.Genders(Gender) VALUES ('Female'),('Male')
+
+
+CREATE TABLE [dbo].Departments(
+DepartmentID int PRIMARY KEY IDENTITY(1,1) ,
+Department varchar(7)
+);
+GO
+INSERT INTO dbo.Departments(Department) VALUES ('ComSci'),('BEng'),('GameDev')
 GO
 
 
@@ -47,6 +79,10 @@ CREATE TABLE [dbo].[Universities] (
     UserID int REFERENCES Users (UserID)
 );
 GO
+/*Foreign Key Conflict when trying to Insert a University. This also Affects Adding Students*/
+INSERT INTO dbo.Universities (UniName, DepartmentID, UserID) VALUES ('Wits', 1, 2);
+
+
 
 -- Creating University Application Table
  CREATE TABLE [dbo].[UniversityApplication] (
@@ -80,20 +116,22 @@ AmountAllocated money
 GO
 
 
+
+/*Updated Students Table with field changes */
 -- Creating Students Table
 CREATE TABLE [dbo].StudentsTable(
-    StudentID int PRIMARY KEY identity(1,1),
-    FirstName varchar(50) NOT NULL,
-    LastName varchar(50) NOT NULL,
-    GenderID int REFERENCES [dbo].Genders(GenderID),
+    StudentID int PRIMARY KEY IDENTITY(1,1),
+    UserID int NOT NULL,
     DateOfBirth date NOT NULL,
+    GenderID INT REFERENCES Genders(GenderID), -- Assuming Genders table exists
     EthnicityID int REFERENCES [dbo].Ethnicity(EthnicityID),
     DepartmentID int REFERENCES [dbo].Departments(DepartmentID) ,
+    UniversityID int REFERENCES [dbo].Universities(UniversityID), -- New column
     Age AS dbo.CalculateAge(DateOfBirth) ,
     CONSTRAINT [CK_DateOfBirth] CHECK ((dbo.CalculateAge(DateOfBirth) > 18)),
     CONSTRAINT [CKK_DateOfBirth] check( (dbo.CalculateAge(DateOfBirth) <36 )),
+    CONSTRAINT FK_StudentUser FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
-GO
 
 -- Creating Student Allocations Table
 CREATE TABLE [dbo].[StudentAllocations](
@@ -103,27 +141,7 @@ CREATE TABLE [dbo].[StudentAllocations](
 );
 GO
 
-/*
--- Create a trigger to update AmountSpent when a new application is created
--- Need to check trigger and fix 
 
-CREATE TRIGGER UpdateAmountSpent
-ON StudentAllocations
-AFTER INSERT
-AS
-BEGIN
-    -- Update AmountSpent in BursaryAllocations table
-    -- Still need to test out 
-    UPDATE BursaryAllocations
-    SET AmountSpent = AmountSpent + inserted.Amount
-    FROM BursaryAllocations BA
-    INNER JOIN Students S ON BA.UniversityID = S.UniversityID
-    INNER JOIN inserted ON BA.AllocationID = inserted.AllocationID
-    WHERE S.StudentID = inserted.StudentID;
-END;
-
-GO 
-*/
 
 -- Creating Student Documents Table
 CREATE TABLE [dbo].Documents (
