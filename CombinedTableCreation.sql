@@ -45,6 +45,16 @@ INSERT INTO dbo.Users (FirstName, LastName, RoleID)
 VALUES ('Mike', 'Smith', 2);
 GO
 
+/*Contact Details Table*/
+CREATE TABLE ContactDetails (
+    ContactID INT PRIMARY KEY IDENTITY(1,1),
+    UserID INT NOT NULL,
+    Email VARCHAR(255) UNIQUE,
+    PhoneNumber VARCHAR(20),
+    GenderID INT REFERENCES Genders(GenderID), -- Assuming Genders table exists
+    CONSTRAINT FK_UserContact FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
 /*Added Ethnicity, Dept and Genders tables*/
 CREATE TABLE [dbo].Ethnicity(
 EthnicityID int PRIMARY KEY IDENTITY(1,1) ,

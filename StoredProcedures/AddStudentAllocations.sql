@@ -37,8 +37,8 @@ BEGIN
         SET @UserID = SCOPE_IDENTITY(); 
 
         -- Insert into ContactDetails table
-        INSERT INTO ContactDetails (UserID, Email, PhoneNumber, GenderID)
-        VALUES (@UserID, @Email, @PhoneNumber, @GenderID);
+        INSERT INTO ContactDetails (UserID, Email, PhoneNumber)
+        VALUES (@UserID, @Email, @PhoneNumber);
 
         -- Insert into StudentsTable
         INSERT INTO dbo.StudentsTable (UserID, DateOfBirth, EthnicityID, DepartmentID, UniversityID, GenderID)
