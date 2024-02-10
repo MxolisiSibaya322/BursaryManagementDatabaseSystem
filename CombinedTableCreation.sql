@@ -18,7 +18,7 @@ BEGIN
 
     SET @Result = DATEDIFF(day,@DateOfBirth,CAST (GETDATE() AS DATE ))
 
-    RETURN @Result/365;
+    RETURN @Result/365.25;
 END;
 GO
 -- Creating Roles Table 
@@ -43,7 +43,7 @@ GO
 CREATE TABLE [dbo].[Universities] (
     [UniversityID] INT PRIMARY KEY IDENTITY(1,1),
     [UniName] VARCHAR(200),
-    [Dept] VARCHAR(20),
+    DepartmentID int REFERENCES [dbo].Departments(DepartmentID) ,
     UserID int REFERENCES Users (UserID)
 );
 GO
@@ -52,7 +52,7 @@ GO
  CREATE TABLE [dbo].[UniversityApplication] (
     [ApplicationID] INT PRIMARY KEY IDENTITY(1,1),
     [ApplicationStatus] VARCHAR(200),
-    UniversityID int REFERENCES Universities(UniversityID) -- Specify the data type here
+    UniversityID int REFERENCES [dbo].Universities(UniversityID) -- Specify the data type here
 );
 GO
 
@@ -85,13 +85,13 @@ CREATE TABLE [dbo].StudentsTable(
     StudentID int PRIMARY KEY identity(1,1),
     FirstName varchar(50) NOT NULL,
     LastName varchar(50) NOT NULL,
-    Gender varchar(6) NOT NULL,
+    GenderID int REFERENCES [dbo].Genders(GenderID),
     DateOfBirth date NOT NULL,
-    Ethnicity varchar(10) NOT NULL,
-    [Dept] VARCHAR(20) NOT NULL,
+    EthnicityID int REFERENCES [dbo].Ethnicity(EthnicityID),
+    DepartmentID int REFERENCES [dbo].Departments(DepartmentID) ,
+    Age AS dbo.CalculateAge(DateOfBirth) ,
     CONSTRAINT [CK_DateOfBirth] CHECK ((dbo.CalculateAge(DateOfBirth) > 18)),
     CONSTRAINT [CKK_DateOfBirth] check( (dbo.CalculateAge(DateOfBirth) <36 )),
-    CONSTRAINT [CK_Ethnicity] CHECK(Ethnicity IN( 'African','Colored','Indian'))
 );
 GO
 
@@ -99,7 +99,7 @@ GO
 CREATE TABLE [dbo].[StudentAllocations](
     AllocationID int PRIMARY KEY  identity(1,1),
     Amount money NOT NULL,
-    StudentID int REFERENCES StudentsTable(StudentID)
+    StudentID int REFERENCES [dbo].StudentsTable(StudentID)
 );
 GO
 
@@ -130,13 +130,13 @@ CREATE TABLE [dbo].Documents (
     CV VARBINARY(1000),
     ID VARBINARY(1000),
     AcademicTranscript VARBINARY(1000),
-    StudentID int REFERENCES StudentsTable(StudentID)
+    StudentID int REFERENCES [dbo].StudentsTable(StudentID)
 );
 GO
 
 -- SELECT * FROM dbo.Users
 -- SELECT * FROM dbo.Roles
--- SELECT * FROM dbo.StudentsTable
+ --SELECT * FROM dbo.StudentsTable
 -- SELECT * FROM dbo.Universities
 -- SELECT * FROM dbo.UniversityApplication
 -- SELECT * FROM dbo.UniversityApplication

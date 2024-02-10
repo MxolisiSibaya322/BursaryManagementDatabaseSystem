@@ -1,11 +1,12 @@
+
 CREATE PROCEDURE AddStudentAllocation
     @FirstName VARCHAR(50),
     @LastName VARCHAR(50),
-    @Gender VARCHAR(6),
+    @Gender int,
     @DateOfBirth DATE,
-    @Ethnicity VARCHAR(10),
+    @Ethnicity int,
     @Amount MONEY,
-	@Dept VARCHAR(20)
+	@Dept int
 AS
 BEGIN
     -- Suppress row count for affected rows
@@ -18,13 +19,13 @@ BEGIN
         BEGIN TRANSACTION;
 
         -- Insert into StudentsTable and get the generated StudentID
-        INSERT INTO StudentsTable (FirstName, LastName, Gender, DateOfBirth, Ethnicity, Dept)
+        INSERT INTO [dbo].StudentsTable (FirstName, LastName, GenderID, DateOfBirth, EthnicityID, DepartmentID)
         VALUES (@FirstName, @LastName, @Gender, @DateOfBirth, @Ethnicity, @Dept);
 
         SET @StudentID = SCOPE_IDENTITY(); -- Get the ID of the newly inserted student
 
         -- Insert allocation into StudentAllocations
-        INSERT INTO StudentAllocations (Amount, StudentID)
+        INSERT INTO [dbo].StudentAllocations (Amount, StudentID)
         VALUES (@Amount, @StudentID);
 
         -- Commit the transaction if all operations succeed
@@ -42,6 +43,6 @@ END;
 
 
 
-/*
-EXEC AddStudentAllocation 'John', 'Doe', 'Male', '1990-01-01', 'Indian', 500, 'computer';
-*/ 
+
+--EXEC AddStudentAllocation 'John', 'Doe', 1, '1990-02-09', 2, 500, 1;
+
