@@ -1,7 +1,7 @@
---USE master;  
---GO  
---CREATE DATABASE BursaryDatabase 
---GO
+USE master;  
+GO  
+CREATE DATABASE BursaryDatabase 
+GO
 
 
 USE BursaryDatabase
@@ -85,7 +85,7 @@ CREATE TABLE [dbo].StudentsTable(
     StudentID int PRIMARY KEY identity(1,1),
     FirstName varchar(50) NOT NULL,
     LastName varchar(50) NOT NULL,
-    GenderID int REFERENCES Genders(GenderID),
+    GenderID int REFERENCES [dbo].Genders(GenderID),
     DateOfBirth date NOT NULL,
     EthnicityID int REFERENCES [dbo].Ethnicity(EthnicityID),
     DepartmentID int REFERENCES [dbo].Departments(DepartmentID) ,

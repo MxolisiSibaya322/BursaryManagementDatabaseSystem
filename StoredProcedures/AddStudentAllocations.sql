@@ -1,3 +1,4 @@
+
 CREATE PROCEDURE AddStudentAllocation
     @FirstName VARCHAR(50),
     @LastName VARCHAR(50),
@@ -43,4 +44,5 @@ END;
 
 
 
---EXEC AddStudentAllocation 'John', 'Doe', 'Male', '1990-02-09', 'Indian', 500, 'computer';
+--EXEC AddStudentAllocation 'John', 'Doe', 1, '1990-02-09', 2, 500, 1;
+

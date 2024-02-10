@@ -1,11 +1,3 @@
-USE master;  
-GO  
-CREATE DATABASE BursaryDatabase 
-GO
-
-USE BursaryDatabase
-GO
-
 CREATE TABLE [dbo].Ethnicity(
 EthnicityID int PRIMARY KEY IDENTITY(1,1) ,
 Ethnicity VARCHAR(8)
