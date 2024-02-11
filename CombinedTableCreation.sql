@@ -94,14 +94,19 @@ CREATE TABLE [dbo].[UniversitiyUser] (
 );
 GO
 
--- Creating University Application Table
- CREATE TABLE [dbo].[UniversityApplication] (
-    [ApplicationID] INT PRIMARY KEY IDENTITY(1,1),
-    [ApplicationStatus] VARCHAR(200),
-    UniversityID int REFERENCES [dbo].Universities(UniversityID) -- Specify the data type here
-);
-GO
 
+--Create aplication status table
+CREATE TABLE ApplicationStatuses (
+    StatusID INT PRIMARY KEY IDENTITY(1,1),
+    StatusName VARCHAR(50) NOT NULL
+);
+
+-- Creating University Application Table
+CREATE TABLE [dbo].[UniversityApplication] (
+    ApplicationID INT PRIMARY KEY IDENTITY(1,1),
+    UniversityID INT REFERENCES Universities(UniversityID),
+    CONSTRAINT FK_ApplicationStatus FOREIGN KEY (ApplicationStatusID) REFERENCES ApplicationStatuses(StatusID)
+);
 
 -- Creating Bursary Allocations Table
 CREATE TABLE BursaryAllocations (
