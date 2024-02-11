@@ -14,6 +14,7 @@ CREATE PROCEDURE AddStudentAllocation
     @DateOfBirth DATE,
     @EthnicityID INT,
     @Amount MONEY,
+    @AllocationYear INT,
     @DeptID INT,
     @UniversityID INT  -- New parameter
 AS
@@ -47,8 +48,8 @@ BEGIN
         SET @StudentID = SCOPE_IDENTITY(); 
 
         -- Insert allocation into StudentAllocations
-        INSERT INTO dbo.StudentAllocations (Amount, StudentID)
-        VALUES (@Amount, @StudentID);
+        INSERT INTO dbo.StudentAllocations (Amount,AllocationYear, StudentID)
+        VALUES (@Amount,@AllocationYear, @StudentID);
 
         -- Commit the transaction if all operations succeed
         COMMIT TRANSACTION;
@@ -78,6 +79,7 @@ EXEC AddStudentAllocation
     @DateOfBirth = '1997-11-01',
     @EthnicityID = 1,
     @Amount = 50000,
+    AllocationYear = 2024,
     @DeptID = 3,
     @UniversityID = 3;
 
