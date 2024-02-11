@@ -46,7 +46,7 @@ GO
 CREATE TABLE ContactDetails (
     ContactID INT PRIMARY KEY IDENTITY(1,1),
     UserID INT NOT NULL,
-    Email VARCHAR(255) UNIQUE,
+    Email VARCHAR(255) ,
     PhoneNumber VARCHAR(20),
     CONSTRAINT FK_UserContact FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
