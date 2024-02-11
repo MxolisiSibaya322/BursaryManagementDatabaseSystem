@@ -154,6 +154,7 @@ CREATE TABLE [dbo].StudentsTable(
 CREATE TABLE [dbo].[StudentAllocations](
     AllocationID int PRIMARY KEY  identity(1,1),
     Amount money NOT NULL,
+    AllocationYear INT,
     StudentID int REFERENCES [dbo].StudentsTable(StudentID)
 );
 GO
