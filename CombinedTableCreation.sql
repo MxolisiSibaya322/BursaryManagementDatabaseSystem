@@ -81,15 +81,18 @@ GO
 CREATE TABLE [dbo].[Universities] (
     [UniversityID] INT PRIMARY KEY IDENTITY(1,1),
     [UniName] VARCHAR(200),
-    DepartmentID int REFERENCES [dbo].Departments(DepartmentID) ,
-    UserID int REFERENCES Users (UserID)
 );
 GO
 /*Foreign Key Conflict when trying to Insert a University. This also Affects Adding Students
 INSERT INTO dbo.Universities (UniName, DepartmentID, UserID) VALUES ('Wits', 1, 2);
 */
 
-
+CREATE TABLE [dbo].[UniversitiyUser] (
+    DepartmentID int REFERENCES [dbo].Departments(DepartmentID) ,
+    UniversityID int REFERENCES [dbo].Universities(UniversityID) ,
+    UserID int REFERENCES Users (UserID)
+);
+GO
 
 -- Creating University Application Table
  CREATE TABLE [dbo].[UniversityApplication] (
@@ -159,10 +162,18 @@ CREATE TABLE [dbo].Documents (
 );
 GO
 
--- SELECT * FROM dbo.Users
--- SELECT * FROM dbo.Roles
- --SELECT * FROM dbo.StudentsTable
--- SELECT * FROM dbo.Universities
--- SELECT * FROM dbo.UniversityApplication
--- SELECT * FROM dbo.UniversityApplication
--- SELECT * FROM dbo.BBDAdminBalance
+ SELECT * FROM dbo.Users
+ SELECT * FROM dbo.Roles
+ SELECT * FROM dbo.StudentsTable
+ SELECT * FROM dbo.Universities
+ SELECT * FROM dbo.UniversitiyUser
+ SELECT * FROM dbo.BursaryAllocations
+ SELECT * FROM dbo.UniversityApplication
+ SELECT * FROM dbo.BBDAdminBalance
+ SELECT * FROM dbo.Ethnicity
+ SELECT * FROM dbo.Genders
+ SELECT * FROM dbo.Departments
+ SELECT * FROM dbo.ContactDetails
+ SELECT * FROM dbo.Documents
+ 
+
