@@ -87,21 +87,27 @@ GO
 INSERT INTO dbo.Universities (UniName, DepartmentID, UserID) VALUES ('Wits', 1, 2);
 */
 
-CREATE TABLE [dbo].[UniversitiyUser] (
+CREATE TABLE [dbo].[UniversityUser] (
     DepartmentID int REFERENCES [dbo].Departments(DepartmentID) ,
     UniversityID int REFERENCES [dbo].Universities(UniversityID) ,
     UserID int REFERENCES Users (UserID)
 );
 GO
 
--- Creating University Application Table
- CREATE TABLE [dbo].[UniversityApplication] (
-    [ApplicationID] INT PRIMARY KEY IDENTITY(1,1),
-    [ApplicationStatus] VARCHAR(200),
-    UniversityID int REFERENCES [dbo].Universities(UniversityID) -- Specify the data type here
-);
-GO
 
+--Create aplication status table
+CREATE TABLE ApplicationStatuses (
+    StatusID INT PRIMARY KEY IDENTITY(1,1),
+    StatusName VARCHAR(50) NOT NULL
+);
+
+-- Creating University Application Table
+CREATE TABLE [dbo].[UniversityApplication] (
+    ApplicationID INT PRIMARY KEY IDENTITY(1,1),
+    ApplicationStatusID INT,
+    UniversityID INT REFERENCES Universities(UniversityID),
+    CONSTRAINT FK_ApplicationStatus FOREIGN KEY (ApplicationStatusID) REFERENCES ApplicationStatuses(StatusID)
+);
 
 -- Creating Bursary Allocations Table
 CREATE TABLE BursaryAllocations (
@@ -110,6 +116,7 @@ CREATE TABLE BursaryAllocations (
     AmountAlloc MONEY,
     AmountSpent MONEY DEFAULT 0, -- Set initial value to zero
     AmountRem AS (AmountAlloc - AmountSpent),
+    AllocationYear INT,
     FOREIGN KEY (UniversityID) REFERENCES Universities(UniversityID),
 	-- Needs to be more than 0 
     CONSTRAINT CHK_AmountAlloc CHECK (AmountAlloc >= 0)
@@ -147,6 +154,7 @@ CREATE TABLE [dbo].StudentsTable(
 CREATE TABLE [dbo].[StudentAllocations](
     AllocationID int PRIMARY KEY  identity(1,1),
     Amount money NOT NULL,
+    AllocationYear INT,
     StudentID int REFERENCES [dbo].StudentsTable(StudentID)
 );
 GO
@@ -166,7 +174,7 @@ GO
  SELECT * FROM dbo.Roles
  SELECT * FROM dbo.StudentsTable
  SELECT * FROM dbo.Universities
- SELECT * FROM dbo.UniversitiyUser
+ SELECT * FROM dbo.UniversityUser
  SELECT * FROM dbo.BursaryAllocations
  SELECT * FROM dbo.UniversityApplication
  SELECT * FROM dbo.BBDAdminBalance
