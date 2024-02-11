@@ -1,4 +1,3 @@
-
 /*
 ** Updated Student Procedure 
 First insert the user details, then retrieve the generated UserID. 
