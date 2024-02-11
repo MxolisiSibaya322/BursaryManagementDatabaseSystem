@@ -104,6 +104,7 @@ CREATE TABLE ApplicationStatuses (
 -- Creating University Application Table
 CREATE TABLE [dbo].[UniversityApplication] (
     ApplicationID INT PRIMARY KEY IDENTITY(1,1),
+    ApplicationStatusID INT,
     UniversityID INT REFERENCES Universities(UniversityID),
     CONSTRAINT FK_ApplicationStatus FOREIGN KEY (ApplicationStatusID) REFERENCES ApplicationStatuses(StatusID)
 );
@@ -115,6 +116,7 @@ CREATE TABLE BursaryAllocations (
     AmountAlloc MONEY,
     AmountSpent MONEY DEFAULT 0, -- Set initial value to zero
     AmountRem AS (AmountAlloc - AmountSpent),
+    AllocationYear INT,
     FOREIGN KEY (UniversityID) REFERENCES Universities(UniversityID),
 	-- Needs to be more than 0 
     CONSTRAINT CHK_AmountAlloc CHECK (AmountAlloc >= 0)
