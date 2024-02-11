@@ -41,9 +41,6 @@ CREATE TABLE [dbo].Users (
     FOREIGN KEY (RoleID) REFERENCES Roles(RoleID)
 );
 GO
-INSERT INTO dbo.Users (FirstName, LastName, RoleID)
-VALUES ('Mike', 'Smith', 2);
-GO
 
 /*Contact Details Table*/
 CREATE TABLE ContactDetails (
@@ -51,7 +48,6 @@ CREATE TABLE ContactDetails (
     UserID INT NOT NULL,
     Email VARCHAR(255) UNIQUE,
     PhoneNumber VARCHAR(20),
-    GenderID INT REFERENCES Genders(GenderID), -- Assuming Genders table exists
     CONSTRAINT FK_UserContact FOREIGN KEY (UserID) REFERENCES Users(UserID)
 );
 
@@ -89,8 +85,9 @@ CREATE TABLE [dbo].[Universities] (
     UserID int REFERENCES Users (UserID)
 );
 GO
-/*Foreign Key Conflict when trying to Insert a University. This also Affects Adding Students*/
+/*Foreign Key Conflict when trying to Insert a University. This also Affects Adding Students
 INSERT INTO dbo.Universities (UniName, DepartmentID, UserID) VALUES ('Wits', 1, 2);
+*/
 
 
 
