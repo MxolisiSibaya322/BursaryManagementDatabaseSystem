@@ -26,9 +26,10 @@ END
 CREATE PROCEDURE AddIntoBursaryAllocations
 @UniversityID int,
 @AmountAllocated money,
-@AmountSpent money
-AS INSERT INTO BursaryAllocations (UniversityID,AmountAlloc,AmountSpent)
-VALUES (@UniversityID,@AmountAllocated,@AmountSpent)
+@AmountSpent money,
+@AllocationYear int,
+AS INSERT INTO BursaryAllocations (UniversityID,AmountAlloc,AmountSpent,AllocationYear)
+VALUES (@UniversityID,@AmountAllocated,@AmountSpent,@AllocationYear)
 
 CREATE PROCEDURE InsertIntoUniversityApplication @ApplicationStatus varchar(200) , @UniversityID int 
 AS
