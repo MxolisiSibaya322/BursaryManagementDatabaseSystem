@@ -66,19 +66,23 @@ END;
 
 
 
-/*
+
 EXEC AddStudentAllocation 'John', 'Doe', 'john.doe@example.com', '1234567890', 1, '1990-02-09', 2, 50000, 1, 1;
 
 EXEC AddStudentAllocation 
-    @FirstName = 'John',
-    @LastName = 'Doe',
-    @Email = 'john.doe@example.com',
-    @PhoneNumber = '1234567890',
-    @GenderID = 1,
-    @DateOfBirth = '1990-02-09',
-    @EthnicityID = 2,
+    @FirstName = 'Lungelo',
+    @LastName = 'Abrahams',
+    @Email = 'Lungelo.Abrahams@gmail.com',
+    @PhoneNumber = '(187) 125-9422',
+    @GenderID = 2,
+    @DateOfBirth = '1997-11-01',
+    @EthnicityID = 1,
     @Amount = 50000,
-    @DeptID = 1,
-    @UniversityID = 1;
+    @DeptID = 3,
+    @UniversityID = 3;
 
-*/ 
+
+    SELECT * FROM dbo.StudentsTable
+    SELECT * FROM dbo.StudentAllocations
+    SELECT * FROM dbo.ContactDetails
+    SELECT * FROM dbo.Users
