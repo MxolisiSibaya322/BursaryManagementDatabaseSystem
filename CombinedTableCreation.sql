@@ -87,7 +87,7 @@ GO
 INSERT INTO dbo.Universities (UniName, DepartmentID, UserID) VALUES ('Wits', 1, 2);
 */
 
-CREATE TABLE [dbo].[UniversitiyUser] (
+CREATE TABLE [dbo].[UniversityUser] (
     DepartmentID int REFERENCES [dbo].Departments(DepartmentID) ,
     UniversityID int REFERENCES [dbo].Universities(UniversityID) ,
     UserID int REFERENCES Users (UserID)
@@ -174,7 +174,7 @@ GO
  SELECT * FROM dbo.Roles
  SELECT * FROM dbo.StudentsTable
  SELECT * FROM dbo.Universities
- SELECT * FROM dbo.UniversitiyUser
+ SELECT * FROM dbo.UniversityUser
  SELECT * FROM dbo.BursaryAllocations
  SELECT * FROM dbo.UniversityApplication
  SELECT * FROM dbo.BBDAdminBalance
