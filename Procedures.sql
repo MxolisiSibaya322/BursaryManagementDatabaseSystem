@@ -58,14 +58,14 @@ BEGIN
     END CATCH;
 END;
 
-
+GO
 
 CREATE PROCEDURE AddRole @RoleName varchar(3)
 AS
 BEGIN 
 INSERT INTO Roles (RoleName) VALUES (@RoleName)
 END
-
+GO
  CREATE PROCEDURE AddUser
     @FirstName VARCHAR(50),
 	@LastName varchar(120),
@@ -75,6 +75,8 @@ BEGIN
     INSERT INTO Users(FirstName,LastName,RoleID)
     VALUES (@FirstName,@LastName,@RoleID)
 END
+GO
+
 
  CREATE PROCEDURE AddIntoUniversities   @UniName VARCHAR(50)
  AS
@@ -85,6 +87,8 @@ END
  )
 END
 
+GO
+
 CREATE PROCEDURE AddIntoBursaryAllocations
 @UniversityID int,
 @AmountAllocated money,
@@ -92,12 +96,14 @@ CREATE PROCEDURE AddIntoBursaryAllocations
 @AllocationYear int
 AS INSERT INTO BursaryAllocations (UniversityID,AmountAlloc,AmountSpent,AllocationYear)
 VALUES (@UniversityID,@AmountAllocated,@AmountSpent,@AllocationYear)
+GO
 
 CREATE PROCEDURE InsertIntoUniversityApplication  @ApplicationStatusID int , @UniversityID int 
 AS
 BEGIN
 INSERT INTO UniversityApplication ( ApplicationStatusID,UniversityID)  VALUES ( @ApplicationStatusID , @UniversityID ) 
 END
+GO
 
 -- Create a procedure named InsertTopUniversities
 CREATE PROCEDURE InsertTopUniversities
@@ -125,3 +131,27 @@ END
 GO
 EXEC InsertTopUniversities;
 GO
+
+CREATE PROCEDURE AddStudentDocuments
+@CV VARBINARY(2000),
+@ID VARBINARY(2000),
+@AcademicTranscript VARBINARY(2000),
+@StudentID int
+
+AS
+BEGIN
+BEGIN TRANSACTION
+BEGIN TRY
+
+  INSERT INTO dbo.Documents (CV, ID, AcademicTranscript,StudentID) VALUES (@CV, @ID, @AcademicTranscript,@StudentID)
+
+  COMMIT TRANSACTION
+END TRY
+BEGIN CATCH
+
+  IF @@TRANCOUNT > 0
+    ROLLBACK TRANSACTION
+  SELECT ERROR_NUMBER () AS ErrorNumber, ERROR_MESSAGE () AS ErrorMessage;
+END CATCH
+
+END

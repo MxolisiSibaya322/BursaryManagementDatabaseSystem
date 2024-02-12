@@ -99,11 +99,17 @@ CREATE TABLE ApplicationStatuses (
     StatusID INT PRIMARY KEY IDENTITY(1,1),
     StatusName VARCHAR(50) NOT NULL
 );
+INSERT INTO dbo.ApplicationStatuses (StatusName) 
+VALUES 
+    ('Pending'),
+    ('Accepted'),
+    ('Rejected');
 
 -- Creating University Application Table
 CREATE TABLE [dbo].[UniversityApplication] (
     ApplicationID INT PRIMARY KEY IDENTITY(1,1),
     ApplicationStatusID INT,
+    AmountRequested money,
     UniversityID INT REFERENCES Universities(UniversityID),
     CONSTRAINT FK_ApplicationStatus FOREIGN KEY (ApplicationStatusID) REFERENCES ApplicationStatuses(StatusID)
 );
