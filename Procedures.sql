@@ -10,7 +10,6 @@ CREATE PROCEDURE AddStudentAllocation
     @AllocationYear INT,
     @DeptID INT,
     @UniversityID INT  -- New parameter
-
 AS
 BEGIN
     -- Suppress row count for affected rows
@@ -19,34 +18,49 @@ BEGIN
     DECLARE @ErrorMessage NVARCHAR(4000);
     DECLARE @UserID INT;
     DECLARE @StudentID INT;
+    DECLARE @AmountRemaining MONEY;
 
     BEGIN TRY
         BEGIN TRANSACTION;
 
-        -- Insert into Users table
-        INSERT INTO dbo.Users (FirstName, LastName, RoleID)
-        VALUES (@FirstName, @LastName, 3); -- Assuming RoleID 3 is for students
+        -- Check if the amount remaining is more than the amount being allocated
+        SELECT @AmountRemaining = AmountRem 
+        FROM BursaryAllocations 
+        WHERE UniversityID = @UniversityID 
+            AND AllocationYear = @AllocationYear;
 
-        -- Get the generated UserID
-        SET @UserID = SCOPE_IDENTITY(); 
+        IF @AmountRemaining >= @Amount
+        BEGIN
+            -- Insert into Users table
+            INSERT INTO dbo.Users (FirstName, LastName, RoleID)
+            VALUES (@FirstName, @LastName, 3); -- Assuming RoleID 3 is for students
 
-        -- Insert into ContactDetails table
-        INSERT INTO ContactDetails (UserID, Email, PhoneNumber)
-        VALUES (@UserID, @Email, @PhoneNumber);
+            -- Get the generated UserID
+            SET @UserID = SCOPE_IDENTITY(); 
 
-        -- Insert into StudentsTable
-        INSERT INTO dbo.StudentsTable (UserID, DateOfBirth, EthnicityID, DepartmentID, UniversityID, GenderID)
-        VALUES (@UserID, @DateOfBirth, @EthnicityID, @DeptID, @UniversityID, @GenderID);
+            -- Insert into ContactDetails table
+            INSERT INTO ContactDetails (UserID, Email, PhoneNumber)
+            VALUES (@UserID, @Email, @PhoneNumber);
 
-        -- Get the generated StudentID
-        SET @StudentID = SCOPE_IDENTITY(); 
+            -- Insert into StudentsTable
+            INSERT INTO dbo.StudentsTable (UserID, DateOfBirth, EthnicityID, DepartmentID, UniversityID, GenderID)
+            VALUES (@UserID, @DateOfBirth, @EthnicityID, @DeptID, @UniversityID, @GenderID);
 
-        -- Insert allocation into StudentAllocations
-        INSERT INTO dbo.StudentAllocations (Amount,AllocationYear, StudentID)
-        VALUES (@Amount,@AllocationYear, @StudentID);
+            -- Get the generated StudentID
+            SET @StudentID = SCOPE_IDENTITY(); 
 
-        -- Commit the transaction if all operations succeed
-        COMMIT TRANSACTION;
+            -- Insert allocation into StudentAllocations
+            INSERT INTO dbo.StudentAllocations (Amount,AllocationYear, StudentID)
+            VALUES (@Amount,@AllocationYear, @StudentID);
+
+            -- Commit the transaction if all operations succeed
+            COMMIT TRANSACTION;
+        END
+        ELSE
+        BEGIN
+            SET @ErrorMessage = 'Error: Insufficient amount remaining in the bursary allocation.';
+            RAISERROR(@ErrorMessage, 16, 1); -- Use severity level 16 for non-fatal errors
+        END
     END TRY
     BEGIN CATCH
         -- Rollback the transaction if an error occurs
@@ -57,6 +71,7 @@ BEGIN
         RAISERROR(@ErrorMessage, 16, 1); -- Use severity level 16 for non-fatal errors
     END CATCH;
 END;
+
 
 GO
 
