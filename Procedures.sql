@@ -188,12 +188,21 @@ CREATE PROCEDURE AcceptUniversity
 @Year int
 AS 
 BEGIN
+DECLARE @AmountRemaining money
 
+SELECT @AmountRemaining = AmountRemaining 
+        FROM BBDAdminBalance 
+        WHERE BalanceID = 1 
+IF @AmountRemaining >= @AmountGranted
+BEGIN
 UPDATE  UniversityApplication
 SET ApplicationStatusID = 2 
 WHERE UniversityID = @UniversityID;
-
 INSERT INTO dbo.BursaryAllocations (UniversityID,AmountAlloc,AllocationYear,AmountSpent) VALUES (@UniversityID,@AmountGranted,@Year,0)
+UPDATE BBDAdminBalance
+
+SET AmountAllocated = AmountAllocated + @AmountGranted
+END
 END;
 
 GO

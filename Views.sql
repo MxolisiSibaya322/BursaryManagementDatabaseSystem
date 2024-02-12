@@ -12,7 +12,7 @@ GO
 
 
 CREATE VIEW StudentDetails AS
-SELECT StudentID,FirstName,LastName,DateOfBirth,Age,Ethnicity,Department,Gender, UniName, dbo.StudentsTable.UniversityID  from dbo.StudentsTable INNER JOIN dbo.Genders ON 
+SELECT dbo.Studentstable.StudentID,FirstName,LastName,DateOfBirth,Age,Ethnicity,Department,Gender, UniName, dbo.StudentsTable.UniversityID ,dbo.StudentAllocations.Amount   from dbo.StudentsTable INNER JOIN dbo.Genders ON 
 dbo.StudentsTable.GenderID =dbo.Genders.GenderID
 INNER JOIN dbo.Departments ON
 dbo.StudentsTable.DepartmentID =dbo.Departments.DepartmentID
@@ -22,6 +22,8 @@ INNER JOIN dbo.Users ON
 dbo.StudentsTable.UserID =dbo.Users.UserID
 INNER JOIN dbo.Universities ON
 dbo.StudentsTable.UniversityID =dbo.Universities.UniversityID
+INNER JOIN dbo.StudentAllocations ON
+ dbo.Studentstable.StudentID =dbo.StudentAllocations.StudentID 
 GO 
 
 
@@ -29,6 +31,7 @@ SELECT *
 FROM TotalAllocations
 WHERE AllocationYear = 2024;
 GO
+
 
 SELECT * FROM  Universities 
 SELECT * FROM  StudentDetails 

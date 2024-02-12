@@ -3,7 +3,7 @@
 -- Assigning random universities to users
 INSERT INTO dbo.UniversityUser (DepartmentID, UniversityID, UserID) 
 VALUES (1, 1, 2),  -- University of Cape Town, Alice Smith
-       (1, 2, 3),  -- University of the Witwatersrand, Bob Johnson
+       (1, 2, 2),  -- University of the Witwatersrand, Bob Johnson
        (1, 3, 4),  -- University of Pretoria, Jane Brown
        (1, 4, 5),  -- Universiteit Stellenbosch, Michael Williams
        (1, 5, 6),  -- University of KwaZulu-Natal, Emily Jones
