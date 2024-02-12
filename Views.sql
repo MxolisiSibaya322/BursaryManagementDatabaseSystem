@@ -1,3 +1,5 @@
+USE BursaryDatabase
+GO
 CREATE VIEW TotalAllocations AS
 -- Select the AllocationYear and the sum of Amounts from the StudentAllocations table
 SELECT  UniName, AllocationYear, SUM(Amount) AS TotalAmount
@@ -10,7 +12,7 @@ GO
 
 
 CREATE VIEW StudentDetails AS
-SELECT StudentID,FirstName,LastName,DateOfBirth,Age,Ethnicity,Department,Gender, UniName, dbo.StudentsTable.UniversityID ,dbo.StudentsTable.Amount from dbo.StudentsTable INNER JOIN dbo.Genders ON 
+SELECT StudentID,FirstName,LastName,DateOfBirth,Age,Ethnicity,Department,Gender, UniName, dbo.StudentsTable.UniversityID  from dbo.StudentsTable INNER JOIN dbo.Genders ON 
 dbo.StudentsTable.GenderID =dbo.Genders.GenderID
 INNER JOIN dbo.Departments ON
 dbo.StudentsTable.DepartmentID =dbo.Departments.DepartmentID
@@ -30,4 +32,4 @@ GO
 
 SELECT * FROM  Universities 
 SELECT * FROM  StudentDetails 
-
+GO
