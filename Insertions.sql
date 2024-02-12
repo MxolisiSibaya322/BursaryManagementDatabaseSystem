@@ -69,4 +69,4 @@ VALUES
     (1, 14),  -- Tshwane University of Technology
     (1, 15);  -- University of Fort Hare
 
-	INSERT INTO dbo.BBDAdminBalance (AmountAllocated,
+	-- INSERT INTO dbo.BBDAdminBalance (AmountAllocated,

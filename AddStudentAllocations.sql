@@ -37,13 +37,14 @@ EXEC AddStudentAllocation
 
 
     CREATE PROCEDURE ApplyToBBD
-    @UniversityID int
+    @UniversityID int,
     @AmountRequested money
     AS
     BEGIN
 
     INSERT INTO dbo.UniversityApplication(AmountRequested,ApplicationStatusID,UniversityID)VALUES (@AmountRequested,1,@UniversityID)
-GO
+    END
+    GO
 
 CREATE PROCEDURE AcceptUniversity
 @UniversityID int,
@@ -52,11 +53,13 @@ CREATE PROCEDURE AcceptUniversity
 AS 
 BEGIN
 
-UPDATE  dbo.UniversityApplication
-SET ApplicationStatusID = 2 WHERE UniversityID = @UniversityID
+UPDATE  UniversityApplication
+SET ApplicationStatusID = 2 
+WHERE UniversityID = @UniversityID;
 
-INSERT INTO dbo.BursaryAllocations(UniversityID,AmountAllocated,AllocationYear,0) VALUES dbo.BursaryAllocations(@UniversityID,@AmountAllocated,@Year,0)
-END
+INSERT INTO dbo.BursaryAllocations (UniversityID,AmountAllocated,AllocationYear,AmountSpent) VALUES (@UniversityID,@AmountAllocated,@Year,0)
+END;
+
 GO
 
 DECLARE @Counter INT = 1;
