@@ -17,6 +17,7 @@ CREATE PROCEDURE AddStudentAllocation
     @AllocationYear INT,
     @DeptID INT,
     @UniversityID INT  -- New parameter
+
 AS
 BEGIN
     -- Suppress row count for affected rows
@@ -68,7 +69,7 @@ END;
 
 
 
-EXEC AddStudentAllocation 'John', 'Doe', 'john.doe@example.com', '1234567890', 1, '1990-02-09', 2, 50000, 1, 1;
+EXEC AddStudentAllocation 'John', 'Doe', 'john.doe@example.com', '1234567890', 1, '1990-02-09', 2, 50000,2024, 1, 1;
 
 EXEC AddStudentAllocation 
     @FirstName = 'Lungelo',
@@ -79,7 +80,7 @@ EXEC AddStudentAllocation
     @DateOfBirth = '1997-11-01',
     @EthnicityID = 1,
     @Amount = 50000,
-    AllocationYear = 2024,
+    @AllocationYear = 2024,
     @DeptID = 3,
     @UniversityID = 3;
 
@@ -88,3 +89,5 @@ EXEC AddStudentAllocation
     SELECT * FROM dbo.StudentAllocations
     SELECT * FROM dbo.ContactDetails
     SELECT * FROM dbo.Users
+
+    SELECT * FROM dbo.StudentAllocations WHERE AllocatioYear = 2024

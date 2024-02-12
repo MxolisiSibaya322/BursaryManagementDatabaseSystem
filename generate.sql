@@ -33,6 +33,7 @@ BEGIN
     DECLARE @DOB DATE;
     DECLARE @RaceID INT;
     DECLARE @AllocatedAmount INT;
+    DECLARE @Year INT
     DECLARE @DepartmentID INT;
     DECLARE @UniversityID INT;
    
@@ -71,8 +72,9 @@ BEGIN
     SET @AllocatedAmount = 500;
 
     SET @DepartmentID = FLOOR(RAND() * 3) + 1; 
+    SET @Year = 2024
 
-    EXEC AddStudentAllocation @FirstName, @LastName,@Email,@PhoneNumber, @Gender, @DOB, @RaceID, @AllocatedAmount, @DepartmentID,@UniversityID;
+    EXEC AddStudentAllocation @FirstName, @LastName,@Email,@PhoneNumber, @Gender, @DOB, @RaceID, @AllocatedAmount,@Year, @DepartmentID,@UniversityID;
 
     SET @Counter = @Counter + 1;
 END;
