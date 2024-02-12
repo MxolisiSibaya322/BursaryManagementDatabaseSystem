@@ -52,6 +52,10 @@ BEGIN
             -- Insert allocation into StudentAllocations
             INSERT INTO dbo.StudentAllocations (Amount,AllocationYear, StudentID)
             VALUES (@Amount,@AllocationYear, @StudentID);
+            UPDATE BursaryAllocations
+            SET AmountSpent = AmountSpent + @Amount
+            WHERE BursaryAllocations.UniversityID = @UniversityID
+
 
             -- Commit the transaction if all operations succeed
             COMMIT TRANSACTION;
