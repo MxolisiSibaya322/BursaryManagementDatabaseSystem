@@ -32,7 +32,7 @@ EXEC AddStudentAllocation
     SELECT * FROM dbo.ContactDetails
     SELECT * FROM dbo.Users
 
-    SELECT * FROM dbo.StudentAllocations WHERE AllocatioYear = 2024
+    SELECT * FROM dbo.StudentAllocations WHERE AllocationYear = 2024
 
 
 
@@ -44,3 +44,18 @@ BEGIN
 EXEC ApplyToBBD @Counter,200000
 SET @Counter = @Counter + 1;
 END
+
+SELECT * FROM UniversityApplication
+GO
+
+
+DECLARE @Counter INT = 1;
+
+WHILE @Counter <= 15
+BEGIN
+EXEC AcceptUniversity @Counter,200000,2024
+SET @Counter = @Counter + 1;
+END
+
+SELECT * FROM UniversityApplication
+SELECT * FROM BursaryAllocations

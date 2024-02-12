@@ -193,7 +193,7 @@ UPDATE  UniversityApplication
 SET ApplicationStatusID = 2 
 WHERE UniversityID = @UniversityID;
 
-INSERT INTO dbo.BursaryAllocations (UniversityID,AmountAlloc,AllocationYear,AmountSpent) VALUES (@UniversityID,@AmountAllocated,@Year,0)
+INSERT INTO dbo.BursaryAllocations (UniversityID,AmountAlloc,AllocationYear,AmountSpent) VALUES (@UniversityID,@AmountGranted,@Year,0)
 END;
 
 GO
