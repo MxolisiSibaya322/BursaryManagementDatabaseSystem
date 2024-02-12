@@ -45,9 +45,10 @@ EXEC ApplyToBBD @Counter,200000
 SET @Counter = @Counter + 1;
 END
 
-SELECT * FROM UniversityApplication
+SELECT * FROM UniversityApplication 
+INNER JOIN ApplicationStatuses ON
+dbo.UniversityApplication.ApplicationStatusID = dbo.ApplicationStatuses.StatusID
 GO
-
 
 DECLARE @Counter INT = 1;
 
@@ -59,3 +60,4 @@ END
 
 SELECT * FROM UniversityApplication
 SELECT * FROM BursaryAllocations
+SELECT * FROM dbo.BBDAdminBalance
