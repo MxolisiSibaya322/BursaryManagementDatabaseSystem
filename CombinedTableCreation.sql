@@ -76,7 +76,6 @@ GO
 INSERT INTO dbo.Departments(Department) VALUES ('ComSci'),('BEng'),('GameDev')
 GO
 
-
 -- Creating Universities Table 
 CREATE TABLE [dbo].[Universities] (
     [UniversityID] INT PRIMARY KEY IDENTITY(1,1),
@@ -127,7 +126,7 @@ GO
 CREATE TABLE [dbo].BBDAdminBalance(
 BalanceID int PRIMARY KEY IDENTITY(1,1),
 Budget money,
-AmountRemaining money,
+AmountRemaining AS (Budget - AmountAllocated),
 AmountAllocated money
 );
 GO
@@ -158,8 +157,6 @@ CREATE TABLE [dbo].[StudentAllocations](
     StudentID int REFERENCES [dbo].StudentsTable(StudentID)
 );
 GO
-
-
 
 -- Creating Student Documents Table
 CREATE TABLE [dbo].Documents (
