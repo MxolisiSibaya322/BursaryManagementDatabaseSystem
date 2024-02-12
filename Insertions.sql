@@ -48,11 +48,7 @@ VALUES
     (14, 60000.00, 2024), -- Tshwane University of Technology
     (15, 62000.00, 2024); -- University of Fort Hare
 
-INSERT INTO dbo.ApplicationStatuses (StatusName) 
-VALUES 
-    ('Pending'),
-    ('Accepted'),
-    ('Rejected');
+
 
 -- Insert data into UniversityApplication table for all universities
 INSERT INTO dbo.UniversityApplication (ApplicationStatusID, UniversityID) 

@@ -33,3 +33,36 @@ EXEC AddStudentAllocation
     SELECT * FROM dbo.Users
 
     SELECT * FROM dbo.StudentAllocations WHERE AllocatioYear = 2024
+
+
+
+    CREATE PROCEDURE ApplyToBBD
+    @UniversityID int
+    @AmountRequested money
+    AS
+    BEGIN
+
+    INSERT INTO dbo.UniversityApplication(AmountRequested,ApplicationStatusID,UniversityID)VALUES (@AmountRequested,1,@UniversityID)
+GO
+
+CREATE PROCEDURE AcceptUniversity
+@UniversityID int,
+@AmountGranted money,
+@Year int
+AS 
+BEGIN
+
+UPDATE  dbo.UniversityApplication
+SET ApplicationStatusID = 2 WHERE UniversityID = @UniversityID
+
+INSERT INTO dbo.BursaryAllocations(UniversityID,AmountAllocated,AllocationYear,0) VALUES dbo.BursaryAllocations(@UniversityID,@AmountAllocated,@Year,0)
+END
+GO
+
+DECLARE @Counter INT = 1;
+
+WHILE @Counter <= 15
+BEGIN
+EXEC ApplyToBBD ,200000
+SET @Counter = @Counter + 1;
+END
