@@ -16,7 +16,7 @@ To set up the Bursary Database, follow the instructions below:
 
 4. **Run Scripts**:
     - Navigate to the location where you cloned the repository.
-    - Open the main script file `INSERT NAME.sql` in SSMS as a query.
+    - Open the main script file `Procedures.sql` in SSMS as a query.
     - Execute the script to create the necessary tables.
     - Similarly, open the stored procedures script file `INSERT NAME OF SCRIPT.sql` in SSMS as a query and execute it to create the required stored procedures.
 
